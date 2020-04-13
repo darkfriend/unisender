@@ -145,6 +145,10 @@ class Base
 //            return $event;
 //        }
 
+        if(preg_match('#('.PHP_EOL.')#', $params['BODY'])) {
+            $params['BODY'] = str_replace(PHP_EOL,'<br>', $params['BODY']);
+        }
+
         $args = [
             'email' => $params['TO'],
             'sender_name' => self::getOption('fromName', ''),
@@ -171,6 +175,13 @@ class Base
                 }
                 if($keyHeader==='X-Priority') {
                     $keyHeader = 'Priority';
+                    if(strpos($valHeader, 'High')!==false) {
+                        $valHeader = 'High';
+                    } elseif(strpos($valHeader, 'Normal')!==false) {
+                        $valHeader = 'Normal';
+                    } elseif(strpos($valHeader, 'Low')!==false) {
+                        $valHeader = 'Low';
+                    }
                 }
                 $args['headers'][] = "$keyHeader: $valHeader";
             }
