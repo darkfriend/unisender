@@ -1,0 +1,6 @@
+{
+    "require": {
+        "darkfriend/php5-curl": "^1.0",
+        "unisender/api-wrapper": "^1.6"
+    }
+}

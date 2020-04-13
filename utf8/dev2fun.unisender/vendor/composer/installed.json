@@ -1,0 +1,289 @@
+[
+    {
+        "name": "darkfriend/php5-array",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/darkfriend/php5-array.git",
+            "reference": "5ecdc40d6be490213d7b749e83c66d0bbf51f3ac"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/darkfriend/php5-array/zipball/5ecdc40d6be490213d7b749e83c66d0bbf51f3ac",
+            "reference": "5ecdc40d6be490213d7b749e83c66d0bbf51f3ac",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4"
+        },
+        "time": "2019-12-23T14:19:12+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "./ArrayHelper.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "darkfriend",
+                "email": "hi@darkfriend.ru"
+            }
+        ],
+        "description": "PHP5 array helper",
+        "homepage": "https://github.com/darkfriend/php5-array",
+        "keywords": [
+            "array",
+            "darkfriend",
+            "dev",
+            "development",
+            "helper",
+            "php",
+            "php5"
+        ]
+    },
+    {
+        "name": "darkfriend/php5-curl",
+        "version": "1.0.5",
+        "version_normalized": "1.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/darkfriend/php5-curl.git",
+            "reference": "f2bd410dee4a5dbf21309c706b7a2f76793ce247"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/darkfriend/php5-curl/zipball/f2bd410dee4a5dbf21309c706b7a2f76793ce247",
+            "reference": "f2bd410dee4a5dbf21309c706b7a2f76793ce247",
+            "shasum": ""
+        },
+        "require": {
+            "darkfriend/php5-array": "^1.0",
+            "darkfriend/php5-debug": "^1.0",
+            "darkfriend/php5-string": "^1.0",
+            "darkfriend/php5-xml": "^1.0",
+            "php": ">=5.4"
+        },
+        "time": "2020-01-15T18:44:29+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "./CurlHelper.php",
+                "./Curl.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "darkfriend",
+                "email": "hi@darkfriend.ru"
+            }
+        ],
+        "description": "PHP5 curl helper",
+        "homepage": "https://github.com/darkfriend/php5-curl",
+        "keywords": [
+            "curl",
+            "darkfriend",
+            "dev",
+            "development",
+            "helper",
+            "php",
+            "php5"
+        ]
+    },
+    {
+        "name": "darkfriend/php5-debug",
+        "version": "1.0.6",
+        "version_normalized": "1.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/darkfriend/php5-debug.git",
+            "reference": "393ee7603ec667073520179eeb450fc01c5e2347"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/darkfriend/php5-debug/zipball/393ee7603ec667073520179eeb450fc01c5e2347",
+            "reference": "393ee7603ec667073520179eeb450fc01c5e2347",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4"
+        },
+        "time": "2020-01-23T11:29:20+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "./DebugHelper.php",
+                "./Debug.php",
+                "./LogRotate.php",
+                "./Log.php",
+                "./Trace.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "darkfriend",
+                "email": "hi@darkfriend.ru"
+            }
+        ],
+        "description": "PHP5 debug helper",
+        "homepage": "https://github.com/darkfriend/php5-debug",
+        "keywords": [
+            "darkfriend",
+            "debug",
+            "dev",
+            "development",
+            "helper",
+            "log",
+            "logger",
+            "php",
+            "php5",
+            "trace"
+        ]
+    },
+    {
+        "name": "darkfriend/php5-string",
+        "version": "1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/darkfriend/php5-string.git",
+            "reference": "f553da29eb82f3e5a0bb4329b84ad2899ee35172"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/darkfriend/php5-string/zipball/f553da29eb82f3e5a0bb4329b84ad2899ee35172",
+            "reference": "f553da29eb82f3e5a0bb4329b84ad2899ee35172",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4"
+        },
+        "time": "2019-12-23T09:24:51+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "./StringHelper.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "darkfriend",
+                "email": "hi@darkfriend.ru"
+            }
+        ],
+        "description": "PHP5 debug helper",
+        "homepage": "https://github.com/darkfriend/php5-string",
+        "keywords": [
+            "darkfriend",
+            "dev",
+            "development",
+            "helper",
+            "php",
+            "php5",
+            "string"
+        ]
+    },
+    {
+        "name": "darkfriend/php5-xml",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/darkfriend/php5-xml.git",
+            "reference": "4b13fe2594aaacc15800e88afbf911dc0803d889"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/darkfriend/php5-xml/zipball/4b13fe2594aaacc15800e88afbf911dc0803d889",
+            "reference": "4b13fe2594aaacc15800e88afbf911dc0803d889",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2020-01-12T21:37:53+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "darkfriend\\helpers\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "darkfriend",
+                "email": "hi@darkfriend.ru"
+            }
+        ],
+        "description": "PHP5 scripts helper for xml",
+        "homepage": "https://github.com/darkfriend/php5-xml",
+        "keywords": [
+            "darkfriend",
+            "dev",
+            "development",
+            "helper",
+            "php",
+            "php5",
+            "xml"
+        ]
+    },
+    {
+        "name": "unisender/api-wrapper",
+        "version": "v1.6.3",
+        "version_normalized": "1.6.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/unisender-dev/php-api-wrapper.git",
+            "reference": "137d57b2f7ff4bb18b4ee1d273a311bde8bb6f14"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/unisender-dev/php-api-wrapper/zipball/137d57b2f7ff4bb18b4ee1d273a311bde8bb6f14",
+            "reference": "137d57b2f7ff4bb18b4ee1d273a311bde8bb6f14",
+            "shasum": ""
+        },
+        "require": {
+            "ext-iconv": "*",
+            "ext-json": "*",
+            "ext-mbstring": "*",
+            "ext-openssl": "*",
+            "php": ">=5.6.0"
+        },
+        "suggest": {
+            "ext-bz2": "Allows bzip2 compression"
+        },
+        "time": "2019-09-27T07:04:04+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Unisender\\ApiWrapper\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Unisender developers",
+                "email": "devs@unisender.com"
+            }
+        ],
+        "description": "Unisender API wrapper",
+        "keywords": [
+            "api",
+            "extension",
+            "unisender"
+        ]
+    }
+]
