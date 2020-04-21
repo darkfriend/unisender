@@ -2,7 +2,7 @@
 /**
  * @author dev2fun (darkfriend)
  * @copyright darkfriend
- * @version 1.0.0
+ * @version 1.0.2
  */
 
 namespace Dev2fun\UniSender;
@@ -25,6 +25,7 @@ include_once __DIR__.'/vendor/autoload.php';
 
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Loader;
+use darkfriend\helpers\Curl;
 use darkfriend\helpers\DebugHelper;
 use Unisender\ApiWrapper\UnisenderApi;
 
@@ -46,13 +47,22 @@ class Base
 
     public static function checkRequireFields($arFields)
     {
-        self::$errors = [];
+        self::$errors['fields'] = [];
         foreach ($arFields as $keyField => $arField) {
             if(in_array($keyField, self::$requireFields) && empty($arField)) {
-                self::$errors[] = $keyField;
+                self::$errors['fields'][] = $keyField;
             }
         }
-        return empty(self::$errors);
+        return empty(self::$errors['fields']);
+    }
+
+    public static function checkRequireModules()
+    {
+        self::$errors['modules'] = [];
+        if (!\function_exists('curl_init')) {
+            self::$errors['modules'][] = 'Curl';
+        }
+        return empty(self::$errors['modules']);
     }
 
     public static function getOption($name, $default='')

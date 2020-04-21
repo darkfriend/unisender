@@ -2,7 +2,7 @@
 /**
  * @author dev2fun (darkfriend)
  * @copyright darkfriend
- * @version 1.0.0
+ * @version 1.0.2
  */
 defined('B_PROLOG_INCLUDED') and (B_PROLOG_INCLUDED === true) or die();
 
@@ -29,12 +29,12 @@ $aTabs = [
         "ICON" => "main_settings",
         "TITLE" => Loc::getMessage("MAIN_TAB_TITLE_SET"),
     ],
-//    [
-//        "DIV" => "edit2",
-//        "TAB" => Loc::getMessage("D2F_UNISENDER_TAB_2"),
-//        "ICON" => "main_settings",
-//        "TITLE" => Loc::getMessage("D2F_UNISENDER_TAB_2_TITLE_SET"),
-//    ],
+    [
+        "DIV" => "donate",
+        "TAB" => Loc::getMessage('SEC_DONATE_TAB'),
+        "ICON" => "main_user_edit",
+        "TITLE" => Loc::getMessage('SEC_DONATE_TAB_TITLE'),
+    ],
 //    [
 //        "DIV" => "edit3",
 //        "TAB" => Loc::getMessage("D2F_UNISENDER_TAB_3"),
@@ -84,8 +84,17 @@ if ($request->isPost() && check_bitrix_sessid()) {
     }
 
     $error = false;
-    if($arFields['enableSingle']==='Y' && !\Dev2fun\UniSender\Base::checkRequireFields($arFields)) {
-        $error = \Dev2fun\UniSender\Base::$errors;
+    $errorFields = [];
+    $errorModules = [];
+    if($arFields['enableSingle']==='Y') {
+        if(!\Dev2fun\UniSender\Base::checkRequireFields($arFields)) {
+            $errorFields = \Dev2fun\UniSender\Base::$errors['fields'];
+            $error = true;
+        }
+        if(!\Dev2fun\UniSender\Base::checkRequireModules()) {
+            $errorModules = \Dev2fun\UniSender\Base::$errors['modules'];
+            $error = true;
+        }
     }
 
     if(!$error) {
@@ -104,7 +113,7 @@ if($uniSender->hasKey()) {
 }
 
 
-$moduleDie = '/bitrix/modules/dev2fun.unisender';
+//$moduleDie = '/bitrix/modules/dev2fun.unisender';
 //$asset = \Bitrix\Main\Page\Asset::getInstance();
 //$asset->addJs($moduleDie.'/assets/dist/basic/js/main.bundle.js');
 //$asset->addJs($moduleDie.'/assets/dist/basic/js/polyfill.bundle.js');
@@ -118,20 +127,38 @@ $moduleDie = '/bitrix/modules/dev2fun.unisender';
 //echo $msg->Show();
 
 if(!empty($error)) {
-    foreach ($error as &$errorItem) {
-        $errorItem = Loc::getMessage('D2F_UNISENDER_FIELD_ERROR_'.$errorItem);
+    if(!empty($errorFields)) {
+        foreach ($errorFields as &$errorItem) {
+            $errorItem = Loc::getMessage('D2F_UNISENDER_FIELD_ERROR_'.$errorItem);
+        }
+        unset($errorItem);
+        array_unshift(
+            $errorFields,
+            Loc::getMessage('D2F_UNISENDER_FIELD_ERROR')
+        );
+        $msg = new CAdminMessage([
+            'MESSAGE' => implode('<br>', $errorFields),
+            'TYPE' => 'ERROR',
+            'HTML' => true,
+        ]);
+        echo $msg->Show();
     }
-    unset($errorItem);
-    array_unshift(
-        $error,
-        Loc::getMessage('D2F_UNISENDER_FIELD_ERROR')
-    );
-    $msg = new CAdminMessage([
-        'MESSAGE' => implode('<br>', $error),
-        'TYPE' => 'ERROR',
-        'HTML' => true,
-    ]);
-    echo $msg->Show();
+    if(!empty($errorModules)) {
+        foreach ($errorModules as &$errorItem) {
+            $errorItem = Loc::getMessage('D2F_UNISENDER_MODULE_ERROR_NOT_FOUND', ['#MODULE#' => $errorItem]);
+        }
+        unset($errorItem);
+        array_unshift(
+            $errorModules,
+            Loc::getMessage('D2F_UNISENDER_MODULE_ERROR_TITLE')
+        );
+        $msg = new CAdminMessage([
+            'MESSAGE' => implode('<br>', $errorModules),
+            'TYPE' => 'ERROR',
+            'HTML' => true,
+        ]);
+        echo $msg->Show();
+    }
 }
 
 
@@ -340,7 +367,7 @@ $tabControl->begin();
             <input type="checkbox" value="Y" name="options[trackLinks]" <?=$trackLinks?'checked':''?>>
         </td>
     </tr>
-
+    <?php include __DIR__.'/tabs/donate.php'?>
     <?php
     $tabControl->Buttons([
         "btnSave" => true,
