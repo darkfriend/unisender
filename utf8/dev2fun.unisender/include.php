@@ -2,7 +2,7 @@
 /**
  * @author dev2fun (darkfriend)
  * @copyright darkfriend
- * @version 1.0.2
+ * @version 1.0.3
  */
 
 namespace Dev2fun\UniSender;
@@ -155,7 +155,7 @@ class Base
 //            return $event;
 //        }
 
-        if(preg_match('#('.PHP_EOL.')#', $params['BODY'])) {
+        if($params['CONTENT_TYPE']!=='html' && preg_match('#('.PHP_EOL.')#', $params['BODY'])) {
             $params['BODY'] = str_replace(PHP_EOL,'<br>', $params['BODY']);
         }
 
@@ -163,14 +163,14 @@ class Base
             'email' => $params['TO'],
             'sender_name' => self::getOption('fromName', ''),
             'sender_email' => self::getOption('senderEmail', ''),
-//            'sender_email' => $params['HEADER']['From'],
+            //            'sender_email' => $params['HEADER']['From'],
             'subject' => $params['SUBJECT'],
             'body' => $params['BODY'],
             'list_id' => self::getOption('singleListId', ''),
             'track_read' => self::getOption('trackRead', 'Y') === 'Y' ? 1 : 0,
             'track_links' => self::getOption('trackLinks', 'Y') === 'Y' ? 1 : 0,
             'error_checking' => 1,
-//            'metadata' => self::getOption('metadata', []),
+            //            'metadata' => self::getOption('metadata', []),
         ];
 
         if(!empty($params['HEADER'])) {
@@ -217,7 +217,7 @@ class Base
             }
         }
 
-//        DebugHelper::print_pre($args); die();
+        //        DebugHelper::print_pre($args); die();
 
         $uniSenderApi = new UniSenderApi(
             self::getOption('apiKey', ''),
