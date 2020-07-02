@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Darkfriend\\HLHelpers' => $vendorDir . '/darkfriend/hlhelpers/HLHelpers.php',
     'darkfriend\\helpers\\ArrayHelper' => $vendorDir . '/darkfriend/php5-array/ArrayHelper.php',
     'darkfriend\\helpers\\Curl' => $vendorDir . '/darkfriend/php5-curl/Curl.php',
     'darkfriend\\helpers\\CurlHelper' => $vendorDir . '/darkfriend/php5-curl/CurlHelper.php',

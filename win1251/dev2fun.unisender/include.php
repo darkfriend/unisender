@@ -2,7 +2,7 @@
 /**
  * @author dev2fun (darkfriend)
  * @copyright darkfriend
- * @version 1.0.3
+ * @version 1.1.0
  */
 
 namespace Dev2fun\UniSender;
@@ -27,6 +27,7 @@ use Bitrix\Main\Config\Option;
 use Bitrix\Main\Loader;
 use darkfriend\helpers\Curl;
 use darkfriend\helpers\DebugHelper;
+use Darkfriend\HLHelpers;
 use Unisender\ApiWrapper\UnisenderApi;
 
 class Base
@@ -49,7 +50,7 @@ class Base
     {
         self::$errors['fields'] = [];
         foreach ($arFields as $keyField => $arField) {
-            if(in_array($keyField, self::$requireFields) && empty($arField)) {
+            if(\in_array($keyField, self::$requireFields) && empty($arField)) {
                 self::$errors['fields'][] = $keyField;
             }
         }
@@ -80,7 +81,7 @@ class Base
         if(!self::getOption('apiKey', '')) {
             return $arFields;
         }
-        if(!is_array($arFields) || empty($arFields)) {
+        if(!\is_array($arFields) || empty($arFields)) {
             return $arFields;
         }
         $args = [
@@ -155,8 +156,8 @@ class Base
 //            return $event;
 //        }
 
-        if($params['CONTENT_TYPE']!=='html' && preg_match('#('.PHP_EOL.')#', $params['BODY'])) {
-            $params['BODY'] = str_replace(PHP_EOL,'<br>', $params['BODY']);
+        if($params['CONTENT_TYPE']!=='html' && \preg_match('#('.\PHP_EOL.')#', $params['BODY'])) {
+            $params['BODY'] = \str_replace(\PHP_EOL,'<br>', $params['BODY']);
         }
 
         $args = [
@@ -180,22 +181,22 @@ class Base
                 'X-Priority',
             ];
             foreach ($params['HEADER'] as $keyHeader => $valHeader) {
-                if(!in_array($keyHeader, $headerSupport)) {
+                if(!\in_array($keyHeader, $headerSupport)) {
                     continue;
                 }
                 if($keyHeader==='X-Priority') {
                     $keyHeader = 'Priority';
-                    if(strpos($valHeader, 'High')!==false) {
+                    if(\strpos($valHeader, 'High')!==false) {
                         $valHeader = 'High';
-                    } elseif(strpos($valHeader, 'Normal')!==false) {
+                    } elseif(\strpos($valHeader, 'Normal')!==false) {
                         $valHeader = 'Normal';
-                    } elseif(strpos($valHeader, 'Low')!==false) {
+                    } elseif(\strpos($valHeader, 'Low')!==false) {
                         $valHeader = 'Low';
                     }
                 }
                 $args['headers'][] = "$keyHeader: $valHeader";
             }
-            $args['headers'] = implode(\PHP_EOL, $args['headers']);
+            $args['headers'] = \implode(\PHP_EOL, $args['headers']);
         }
 
         if(!empty($params['BCC'])) {
@@ -204,7 +205,7 @@ class Base
 
         if(!empty($params['ATTACHMENT'])) {
             foreach ($params['ATTACHMENT'] as $file) {
-                if(!file_exists($file['PATH'])) {
+                if(!\file_exists($file['PATH'])) {
                     \CEventLog::Add([
                         'SEVERITY' => 'ERROR',
                         'AUDIT_TYPE_ID' => 'FILE_NOT_FOUND',
@@ -213,11 +214,9 @@ class Base
                     ]);
                     continue;
                 }
-                $args['attachments'][$file['NAME']] = file_get_contents($file['PATH']);
+                $args['attachments'][$file['NAME']] = \file_get_contents($file['PATH']);
             }
         }
-
-        //        DebugHelper::print_pre($args); die();
 
         $uniSenderApi = new UniSenderApi(
             self::getOption('apiKey', ''),
@@ -225,6 +224,21 @@ class Base
             4
         );
         $result = $uniSenderApi->sendEmail($args);
+        if($result) {
+            if(\is_string($result)) {
+                $result = \json_decode($result,true);
+            }
+            if(!empty($result['result'][0])) {
+                HLHelpers::getInstance()->addElement(
+                    self::getOption('highload_unisender'),
+                    [
+                        'UF_EMAIL' => $result['result'][0]['email'],
+                        'UF_SEND_ID' => $result['result'][0]['id'],
+                        'UF_DATE' => new \Bitrix\Main\Type\DateTime(),
+                    ]
+                );
+            }
+        }
 
         \CEventLog::Add([
             'SEVERITY' => 'INFO',
@@ -233,8 +247,8 @@ class Base
             'DESCRIPTION' => print_r($result,true),
         ]);
 
-        if(!defined('ONLY_EMAIL')) {
-            define('ONLY_EMAIL', 'Y');
+        if(!\defined('ONLY_EMAIL')) {
+            \define('ONLY_EMAIL', 'Y');
         }
         $event->addResult(new \Bitrix\Main\EventResult(
             \Bitrix\Main\EventResult::SUCCESS,
@@ -246,5 +260,43 @@ class Base
         ));
 
         return $event;
+    }
+
+    public static function DoBuildGlobalMenu(&$aGlobalMenu, &$aModuleMenu)
+    {
+        $aModuleMenu[] = array(
+            "parent_menu" => "global_menu_settings",
+            "icon" => "sys_menu_icon",
+            "page_icon" => "default_page_icon",
+            "sort" => "900",
+            "text" => 'UniSender History',
+            "title" => 'UniSender History',
+            "url" => '/bitrix/admin/dev2fun_unisender_log.php?action=settings',
+            "items_id" => 'menu_dev2fun_unisender',
+            "section" => 'dev2fun_unisender',
+            "more_url" => array(),
+            // "items" => array(
+            //     array(
+            //         "text" => GetMessage("SUB_SETINGS_MENU_TEXT"),
+            //         "title" => GetMessage("SUB_SETINGS_MENU_TITLE"),
+            //         "url" => "/bitrix/admin/dev2fun_opengraph_manager.php?action=settings",
+            //         "sort" => "100",
+            //         "icon" => "sys_menu_icon",
+            //         "page_icon" => "default_page_icon",
+            //     ),
+            // )
+        );
+    }
+
+    public static function ShowThanksNotice()
+    {
+        \CAdminNotify::Add([
+            'MESSAGE' => \Bitrix\Main\Localization\Loc::getMessage(
+                'D2F_UNISENDER_DONATE_MESSAGE',
+                ['#URL#' => '/bitrix/admin/settings.php?lang=ru&mid=dev2fun.unisender&mid_menu=1&tabControl_active_tab=donate']
+            ),
+            'TAG' => 'dev2fun_unisender_update',
+            'MODULE_ID' => self::$module_id,
+        ]);
     }
 }

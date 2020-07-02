@@ -29,6 +29,7 @@ class ComposerStaticInitf7d03a1f1b9c6393cf6fc3ad60036df9
     );
 
     public static $classMap = array (
+        'Darkfriend\\HLHelpers' => __DIR__ . '/..' . '/darkfriend/hlhelpers/HLHelpers.php',
         'darkfriend\\helpers\\ArrayHelper' => __DIR__ . '/..' . '/darkfriend/php5-array/ArrayHelper.php',
         'darkfriend\\helpers\\Curl' => __DIR__ . '/..' . '/darkfriend/php5-curl/Curl.php',
         'darkfriend\\helpers\\CurlHelper' => __DIR__ . '/..' . '/darkfriend/php5-curl/CurlHelper.php',
