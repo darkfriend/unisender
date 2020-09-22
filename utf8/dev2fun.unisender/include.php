@@ -2,7 +2,7 @@
 /**
  * @author dev2fun (darkfriend)
  * @copyright darkfriend
- * @version 1.1.0
+ * @version 1.1.1
  */
 
 namespace Dev2fun\UniSender;
@@ -234,6 +234,7 @@ class Base
                     [
                         'UF_EMAIL' => $result['result'][0]['email'],
                         'UF_SEND_ID' => $result['result'][0]['id'],
+                        'UF_EVENT' => $event->getEventType(),
                         'UF_DATE' => new \Bitrix\Main\Type\DateTime(),
                     ]
                 );
